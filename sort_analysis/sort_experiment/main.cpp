@@ -47,12 +47,20 @@ void descending(int* mas, int size) {
 	}
 }
 
-
+int* create_mas(int size,int w,int q)
+{
+	int* mas = new int[size];
+	for (int i = 0; i < size; i++) {
+		mas[i] = gen_random(w, q);
+	}
+	return mas;
+}
 
 void print_mas(int* mas, int size) {
 	for (int i = 0; i < size; i++) {
 		cout << mas[i] << "  ";
 	}
+	cout << endl;
 }
 
 int main()
@@ -70,18 +78,24 @@ int main()
 
 	do {
 		cout << "Меню:\n\n";
-		cout << "\t\t Сортировки" << endl;
 		cout << "\t\t 1.Задать число элементов." << endl;
 
 		cout << "\t\t 2.Задать границы для значений элементов." << endl;
-
+		cout << endl;
 		cout << "\t\t 3.Заполнить массив псевдослучайными числами." << endl;
 		cout << "\t\t 4.Заполнить числами по неубыванию." << endl;
 		cout << "\t\t 5.Заполнить массив по невозрастанию." << endl;
-
+		cout << endl;
 		cout << "\t\t 6.Эксперимент 1 на массиве псевдослучайных чисел." << endl;
 		cout << "\t\t 7.Эксперимент 1 на массиве упорядоченному по неубыванию." << endl;
 		cout << "\t\t 8.Эксперимент 1 на массиве упорядоченному по невозрастанию." << endl;
+		cout << endl;
+		cout << "\t\t 9.Эксперимент 2 на массиве псевдослучайных чисел." << endl;
+		cout << "\t\t 10.Эксперимент 2 на массиве упорядоченному по неубыванию." << endl;
+		cout << "\t\t 11.Эксперимент 2 на массиве упорядоченному по невозрастанию." << endl;
+		cout << endl;
+		cout << "\t\t Для выхода из прорграммы нажмите 0." << endl;
+		cout << "\nВыберите нужное действие: ";
 		cin >> choice;
 
 		switch (choice)
@@ -102,43 +116,18 @@ int main()
 
 		case 3: //псевдослучайные числа
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
-			srand(time(NULL));
-			for (int i = 0; i < size; i++)
-			{
-				mas_avl[i] = gen_random(w, q);
-				if (size < 20)
-				{
-					cout << " " << mas_avl[i];
-				}
+			mas_avl = create_mas(size, w, q);
+			mas_qs = create_mas(size, w, q);
+			if (size < 20) {
+				print_mas(mas_avl, size);
+				print_mas(mas_qs, size);
 			}
-			cout << endl;
-
-			for (int i = 0; i < size; i++) {
-				mas_qs[i] = gen_random(w, q);
-				if (size < 20)
-				{
-					cout << " " << mas_qs[i];
-				}
-			}
-			cout << endl;
 		}break;
 
 		case 4: //по неубыванию
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
-			//Заполнение массива случайными числами
-			for (int i = 0; i < size; i++)
-			{
-				mas_avl[i] = gen_random(w, q);
-			}
-			cout << endl;
-			for (int i = 0; i < size; i++) {
-				mas_qs[i] = gen_random(w, q);
-			}
-			cout << endl;
+			mas_avl = create_mas(size, w, q);
+			mas_qs = create_mas(size, w, q);
 			//упорядочивание по возрастанию
 			ascending(mas_qs, size);
 			ascending(mas_avl, size);
@@ -153,18 +142,8 @@ int main()
 
 		case 5: //по невозрастанию
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
-			//Заполнение массива случайными числами
-			for (int i = 0; i < size; i++)
-			{
-				mas_avl[i] = gen_random(w, q);
-			}
-			cout << endl;
-			for (int i = 0; i < size; i++) {
-				mas_qs[i] = gen_random(w, q);
-			}
-			cout << endl;
+			mas_avl = create_mas(size, w, q);
+			mas_qs = create_mas(size, w, q);
 			sort(mas_qs, mas_qs + size, compare);
 			sort(mas_avl, mas_avl + size, compare);
 			if (size < 20)
@@ -178,79 +157,70 @@ int main()
 
 		case 6: //Сортировка
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
-			//mas_avl[size] = gen_random(w, q);
 			cout << "Введите n для эксперимента:";
 			cin >> SIZE_1;
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_avl[i] = gen_random(w, q);
-				sort_with_AVL(mas_avl, i, "res_AVL_random_exp1_test2.txt");
+				mas_avl = create_mas(i, w, q);
+				sort_with_AVL(mas_avl, i, "res_AVL_random_exp1_test1.txt");
 
 			}
 
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_qs[i] = gen_random(w, q);
-				sortQuick_with_time(mas_qs, i, "res_quick_sort_random_exp1_test2.txt");
+				mas_qs = create_mas(i, w, q);
+				sortQuick_with_time(mas_qs, i, "res_quick_sort_random_exp1_test1.txt");
 			}
 		}break;
 		case 7:
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
 			cout << "Введите  n для эксперимента:";
 			cin >> SIZE_1;
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_avl[i] = gen_random(w, q);
-				sort(mas_avl, mas_avl + size);
-				sort_with_AVL(mas_avl, i, "res_AVL_ascending_exp1_test2.txt");
+				mas_avl = create_mas(i, w, q);
+				sort(mas_avl, mas_avl + i);
+				sort_with_AVL(mas_avl, i, "res_AVL_ascending_exp1_test1.txt");
 			}
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_qs[i] = gen_random(w, q);
-				sort(mas_qs, mas_qs + size);
-				sortQuick_with_time(mas_qs, i, "res_quick_sort_ascending_exp1_test2.txt");
+				mas_qs = create_mas(i, w, q);
+				sort(mas_qs, mas_qs + i);
+				sortQuick_with_time(mas_qs, i, "res_quick_sort_ascending_exp1_test1.txt");
 			}
 
 		}break;
 		case 8:
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
 			cout << "Введите  n для эксперимента:";
 			cin >> SIZE_1;
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_avl[i] = gen_random(w, q);
-				sort(mas_avl, mas_avl + size, compare);
-				sort_with_AVL(mas_avl, i, "res_AVL_descending_exp1_test2.txt");
+				mas_avl = create_mas(i, w, q);
+				sort(mas_avl, mas_avl + i, compare);
+				sort_with_AVL(mas_avl, i, "res_AVL_descending_exp1_test1.txt");
 			}
 			for (int i = 1; i <= SIZE_1; i += 10000)
 			{
-				mas_qs[i] = gen_random(w, q);
-				sort(mas_qs, mas_qs + size, compare);
-				sortQuick_with_time(mas_qs, i, "res_quick_sort_descending_exp1.txt");
+				mas_qs = create_mas(i, w, q);
+				sort(mas_qs, mas_qs + i, compare);
+				sortQuick_with_time(mas_qs, i, "res_quick_sort_descending_exp1_test1.txt");
 			}
 		}break;
 		case 9:  //Второй экспер-т
 		{
-			mas_avl = new int[size];
-			mas_qs = new int[size];
 			cout << "Введите q для эксперимента:";
 			cin >> q;
 			cout << "Введите w для эксперимента:";
 			cin >> SIZE_2;
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_avl[size] = gen_random(q, i);
+				mas_avl = create_mas(size, q, i);
 				sort_with_AVL(mas_avl, size, "res_AVL_random_exp2_test3.txt");
 			}
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_qs[size] = gen_random(q, i);
+				mas_qs = create_mas(size, q, i);
 				sortQuick_with_time(mas_qs, size, "res_quick_sort_random_exp2.txt");
 			}
 		}break;
@@ -264,13 +234,13 @@ int main()
 			cin >> SIZE_2;
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_avl[size] = gen_random(q, i);
+				mas_avl = create_mas(size, q, i);
 				sort(mas_avl, mas_avl + size);
 				sort_with_AVL(mas_avl, size, "res_AVL_ascending_exp2_test3.txt");
 			}
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_qs[size] = gen_random(q, i);
+				mas_qs = create_mas(size, q, i);
 				sort(mas_qs, mas_qs + size);
 				sortQuick_with_time(mas_qs, size, "res_quick_sort_ascending_exp2.txt");
 			}
@@ -285,23 +255,18 @@ int main()
 			cin >> SIZE_2;
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_avl[size] = gen_random(q, i);
+				mas_avl = create_mas(size, q, i);
 				sort(mas_avl, mas_avl + size, compare);
-				sort_with_AVL(mas_avl, size, "res_AVL_descending_exp2_test2.txt");
+				sort_with_AVL(mas_avl, size, "res_AVL_descending_exp2.txt");
 			}
 			for (int i = 1; i <= SIZE_2; i++)
 			{
-				mas_qs[size] = gen_random(q, i);
+				mas_qs = create_mas(size, q, i);
 				sort(mas_qs, mas_qs + size, compare);
 				sortQuick_with_time(mas_qs, size, "res_quick_sort_descending_exp2.txt");
 			}
-			save_mas(mas_avl, size, "testres_exp2.txt");
+			save_mas(mas_avl, size, "test_res_exp2.txt");
 		}break;
-		case 12:
-		{
-			sort_with_AVL(mas_avl, size, "test_avl5.txt");
-			//print_mas(mas_avl, size);
-		}
 		}
 	} while (choice != 0);
 

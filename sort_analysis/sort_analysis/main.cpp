@@ -1,8 +1,9 @@
 #include <random>
-#include  "avl_tree.h"
+#include "avl_tree.h"
 #include <time.h>
 #include "avl_sort.h"
 #include"quick_sort.h"
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -29,7 +30,7 @@ int main()
 		f >> elem;
 		mas_qs[i] = elem;
 		mas_avl[i] = elem;
-		if (size < 20)
+		if (size < 15)
 		{
 			cout << " " << mas_avl[i];
 		}
@@ -37,13 +38,14 @@ int main()
 	f.close();
 	cout << endl;
 	for (int i = 0; i < size; i++) {
-		if (size < 20)
+		if (size < 15)
 		{
 			cout << " " << mas_qs[i];
 		}
 	}
 	cout << endl;
-	AVLSort_m(mas_avl, size, "test_res_avl2.txt");
-	sortQuick(mas_qs, size, "test_res_quick2.txt");
+	AVLSort_m(mas_avl, size, "res_avl_sort.txt");
+	sortQuick(mas_qs, size, "res_quick_sort.txt");
+
 	return 0;
 }
